@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 
 @Controller // Indica quw a classe vai ser um controller
@@ -34,14 +35,27 @@ class UsuarioController {
 
         println(usuario)
         repositorio.save(usuario)
-        return "home"
+        return "redirect:/home"
 }
     // função que vai abrir a página home
     @GetMapping("/home")
-    fun abrirHome(): String {
+    fun abrirHome(model: Model): String {
         // buscar todos os usuarios do banco de dados
         val usuarios = repositorio.findAll()
+
+        // Colocar a lista de usuarios no model
+        // model envia a lista de usuarios para o HTML
+        model.addAttribute("usuarios", usuarios)
         return "home"
+    }
+
+    //função que vai excluir o usuario
+    //recebe o id do usuario na rota /excluir
+    @GetMapping("/excluir/{id}")
+    fun excluirUsuario(@PathVariable("id") id: Long): String {
+        //excluir usuario
+        repositorio.deleteById(id)
+        return "redirect:/home"
     }
 
 

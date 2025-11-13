@@ -1,50 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- -->
     <meta charset="UTF-8">
-    <title>Gerenciamento de Usuário</title>
-    <!-- links do bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> <!-- link dos icons do bootstrap-->
+    <title>Gerenciamento de usuários</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Gerenciamento de Usuário</h2>
-        <!-- -->
-        <a href="/formulario/cadastro" type="subimit" class="btn btn-primary">Cadastrar Usuário</a>
-        <!-- formato de tabela pego no site do bootstrap -->
-        <table class="table">
-            <thead>
-            <tr>
-                <!-- campos/colunas-->
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">CPF</th>
-                <th scope="col">Função</th>
+<div class="container mt-4">
+    <h2>Gerenciamento dos usuários</h2>
 
-                <th>Açôes</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Maria</td>
-                <td>maria@gmail.com</td>
-                <td>12345678911</td>
-                <td>Administrador</td>
+    <a href="/formulario/cadastro" class="btn btn-primary mb-3">Cadastrar Usuário</a>
 
-                <!-- botoes -->
-                <td>
-                    <a href="#" class="btn btn-primary"><!-- classe pra deixar o botao azul--><i class="bi bi-pencil-fill"></i> <!-- link do icon caneta do bootstrap--></a>
-                    <a href="#" class="btn btn-danger"><!-- classe pra deixar o botao vermelho--><i class="bi bi-trash-fill"></i> <!-- link do icon lixeira do bootstrap--></a>
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Função</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usuarios}">
+            <td th:text="${user.nome}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.cpf}"></td>
+            <td th:text="${user.funcao}"></td>
+            <td>
+                <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-pencil-fill"></i></a>
+                <a th:href="@{/excluir/{id}(id = ${user.id})}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
