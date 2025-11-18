@@ -17,6 +17,7 @@ data class Usuario(
     val email: String = "",
     val cpf: String = "",
     val senha: String = "",
+    val idade: String = "",
     val funcao: String = "",
 
 ) {

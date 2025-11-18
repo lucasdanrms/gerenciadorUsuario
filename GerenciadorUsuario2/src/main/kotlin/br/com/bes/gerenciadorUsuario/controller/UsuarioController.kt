@@ -58,5 +58,36 @@ class UsuarioController {
         return "redirect:/home"
     }
 
+    // função que vai abrir o formulario de edição
+    // com os dados do usuario
+    // recebe o id do usuario na rota /formulario/edicao
+    @GetMapping("/formulario/edicao/{id}")
+    fun abrirFormularioEdicao(@PathVariable("id")id: Long, model: Model): String{
+        // busca o usuario no bd
+        // se não encontrar retorna nulo - orElse(null)
+        val usuario = repositorio.findById(id).orElse(null)
+
+        // passa os dados para o html - model
+        model.addAttribute("usuarioEdit", usuario)
+        return "formulario-edicao"
+    }
+
+    @PostMapping("/editar/{id}")
+    fun editarUsuario(usuario: Usuario, @PathVariable("id") id: Long): String {
+
+        // Inclui no objeto usuario o id recebido
+        usuario.id = id
+
+        // atualiza os dados no bd
+        // save() tem dupla função:
+        // quando o usuario não tem o id - salva
+        // quando o usuario tem um id que já existe no bd - atualiza
+        repositorio.save(usuario)
+
+        // após editar ir para /home
+        // carregar a listar todos os registros
+
+        return "redirect:/home"
+    }
 
 }

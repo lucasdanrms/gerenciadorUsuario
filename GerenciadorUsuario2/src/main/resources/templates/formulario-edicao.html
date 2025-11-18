@@ -11,8 +11,10 @@
 </head>
 <body>
     <div class="container">
-        <h2>Formulário de Cadastro</h2>
-        <form th:object="${usuarioNovo}" method="post" action="/cadastrar">
+        <h2>Formulário de Edição</h2>
+        <!--  mesmo usuario da parte de edição do controller-->
+        <form th:object="${usuarioEdit}" method="post"
+              th:action="@{/editar/{id} (id = ${usuarioEdit.id})}">
             <div class="mb-3" ><!--mb=margem a baixo-->
                 <input class="form-control" type="text" id="nome" name="nome"
                        placeholder="NOME" th:field="*{nome}">
@@ -43,7 +45,7 @@
                     <option value="Programador">Programador</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary">editar</button>
         </form>
     </div>
 </body>
